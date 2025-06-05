@@ -1,5 +1,5 @@
 package com.shadowvault.auth.presentation.login
 
-data class LoginState(
+data class LoginScreenState(
     val isLoading: Boolean = false
 )

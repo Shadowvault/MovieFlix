@@ -14,36 +14,33 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.shadowvault.core.presentation.designsystem.MovieFlixTheme
 import com.shadowvault.core.presentation.ui.ObserveAsEvents
-import com.shadowvault.core.presentation.ui.components.launchCustomTab
+import com.shadowvault.core.presentation.ui.util.launchCustomTab
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun LoginScreenRoot(
-    viewModel: LoginViewModel = koinViewModel()
+    viewModel: LoginScreenViewModel = koinViewModel()
 ) {
 
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     val context = LocalContext.current
-    val keyboardController = LocalSoftwareKeyboardController.current
 
     ObserveAsEvents(viewModel.events) { event ->
         when (event) {
-            is LoginEvent.Error -> {
-                keyboardController?.hide()
+            is LoginScreenEvent.Error -> {
                 AlertDialog.Builder(context).apply {
                     setTitle(event.errorAlertText.title.asString(context))
                     setMessage(event.errorAlertText.description.asString(context))
                 }.show()
             }
 
-            is LoginEvent.OpenBrowser -> {
+            is LoginScreenEvent.OpenBrowser -> {
                 launchCustomTab(context = context, url = event.token)
             }
 
@@ -63,8 +60,8 @@ fun LoginScreenRoot(
 
 @Composable
 private fun LoginScreen(
-    state: LoginState,
-    onAction: (LoginAction) -> Unit
+    state: LoginScreenState,
+    onAction: (LoginScreenAction) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -72,7 +69,7 @@ private fun LoginScreen(
             .padding(vertical = 16.dp),
         horizontalAlignment = Alignment.Start
     ) {
-        Button({ onAction(LoginAction.OnLoginButtonPress) }) { }
+        Button({ onAction(LoginScreenAction.OnLoginButtonPress) }) { }
     }
     Text("")
 }
@@ -83,7 +80,7 @@ private fun LoginScreenPreview() {
     MovieFlixTheme {
         Surface {
             LoginScreen(
-                state = LoginState(
+                state = LoginScreenState(
                     isLoading = false
                 ),
                 onAction = {}

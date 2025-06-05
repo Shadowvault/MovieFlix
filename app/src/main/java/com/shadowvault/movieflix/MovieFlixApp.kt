@@ -5,6 +5,8 @@ import com.shadowvault.auth.data.di.authDataModule
 import com.shadowvault.auth.presentation.di.authViewModelModule
 import com.shadowvault.movieflix.di.appModule
 import com.shadowvault.core.data.di.coreDataModule
+import com.shadowvault.home.data.di.homeDataModule
+import com.shadowvault.home.presentation.di.homeViewModelModule
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import org.koin.android.ext.koin.androidContext
@@ -29,7 +31,9 @@ class MovieFlixApp: Application() {
                 appModule,
                 coreDataModule,
                 authDataModule,
-                authViewModelModule
+                authViewModelModule,
+                homeDataModule,
+                homeViewModelModule
             )
         }
     }

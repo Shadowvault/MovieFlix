@@ -14,22 +14,22 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class LoginViewModel(
+class LoginScreenViewModel(
     private val accountRepository: AccountRepository
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(LoginState())
+    private val _state = MutableStateFlow(LoginScreenState())
     val state = _state.onStart {
 
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), LoginState())
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), LoginScreenState())
 
 
-    private val eventChannel = Channel<LoginEvent>()
+    private val eventChannel = Channel<LoginScreenEvent>()
     val events = eventChannel.receiveAsFlow()
 
-    fun onAction(action: LoginAction) {
+    fun onAction(action: LoginScreenAction) {
         when (action) {
-            LoginAction.OnLoginButtonPress -> createRequestToken()
+            LoginScreenAction.OnLoginButtonPress -> createRequestToken()
             else -> Unit
         }
     }
@@ -40,14 +40,14 @@ class LoginViewModel(
             accountRepository.createRequestToken().fold(
                 onSuccess = { data ->
                     eventChannel.send(
-                        LoginEvent.OpenBrowser(
+                        LoginScreenEvent.OpenBrowser(
                             createLoginUrl(data.requestToken)
                         )
                     )
                 },
                 onError = { error ->
                     eventChannel.send(
-                        LoginEvent.Error(
+                        LoginScreenEvent.Error(
                             error.toAlertText()
                         )
                     )

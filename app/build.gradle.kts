@@ -56,4 +56,8 @@ dependencies {
     implementation(project(":auth:data"))
     implementation(project(":auth:domain"))
     implementation(project(":auth:presentation"))
+
+    implementation(project(":home:data"))
+    implementation(project(":home:domain"))
+    implementation(project(":home:presentation"))
 }
