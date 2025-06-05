@@ -27,6 +27,7 @@ koin = "3.5.6"
 materialIconsExtended = "1.7.8"
 navigationCompose = "2.9.0"
 securityCryptoKtx = "1.1.0-alpha07"
+browser = "1.8.0"
 constraintLayoutCompose = "1.1.1"
 timber = "5.0.1"
 ksp = "2.0.0-1.0.22"
@@ -60,6 +61,7 @@ androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-
 androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
 androidx-compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 androidx-security-crypto-ktx = { module = "androidx.security:security-crypto-ktx", version.ref = "securityCryptoKtx" }
+androidx-browser = { group = "androidx.browser", name = "browser", version.ref = "browser" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization"}
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines"}

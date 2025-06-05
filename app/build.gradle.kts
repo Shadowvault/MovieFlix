@@ -48,8 +48,12 @@ dependencies {
     // Timber
     implementation(libs.timber)
 
-    implementation(project(":core:presentation:designsystem"))
-    implementation(project(":core:presentation:ui"))
-    implementation(project(":core:domain"))
     implementation(project(":core:data"))
+    implementation(project(":core:domain"))
+    implementation(project(":core:presentation:ui"))
+    implementation(project(":core:presentation:designsystem"))
+
+    implementation(project(":auth:data"))
+    implementation(project(":auth:domain"))
+    implementation(project(":auth:presentation"))
 }
