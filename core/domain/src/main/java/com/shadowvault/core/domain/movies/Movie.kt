@@ -1,4 +1,4 @@
-package com.shadowvault.home.domain.remote
+package com.shadowvault.core.domain.movies
 
 data class Movie(
     val id: Int,
@@ -15,5 +15,5 @@ data class Movie(
     val popularity: Double,
     val genreIds: List<Int>,
     val isVideo: Boolean,
-    val isLiked: Boolean = false // default to false, can be updated locally
+    val isLiked: Boolean = false
 )

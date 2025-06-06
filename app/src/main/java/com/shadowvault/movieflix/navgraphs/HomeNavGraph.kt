@@ -3,29 +3,33 @@ package com.shadowvault.movieflix.navgraphs
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
+import androidx.navigation.toRoute
 import com.shadowvault.home.presentation.HomeScreenRoot
+import com.shadowvault.movie_details.presentation.MovieDetailsScreenRoot
 import kotlinx.serialization.Serializable
 
 fun NavGraphBuilder.homeNavGraph(navController: NavHostController) {
 
     composable<MainRoute.Home> {
         HomeScreenRoot(
-            onMovieClicked = {
-
+            onMovieClicked = { movieId ->
+                navController.navigate(MainRoute.Home.MovieDetails(movieId))
             }
         )
     }
     composable<MainRoute.Home.MovieDetails> {
-
+        val arg = it.toRoute<MainRoute.Home.MovieDetails>()
+        MovieDetailsScreenRoot(
+            movieId = arg.movieInt,
+            onBackButtonPress = { navController.navigateUp() }
+        )
     }
-
 }
 
 sealed class MainRoute {
     @Serializable
-    data object Home: MainRoute() {
+    data object Home : MainRoute() {
         @Serializable
-        data object MovieDetails
+        data class MovieDetails(val movieInt: Int)
     }
-
 }

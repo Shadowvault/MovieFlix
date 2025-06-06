@@ -1,6 +1,6 @@
-package com.shadowvault.home.domain.remote
+package com.shadowvault.core.domain.movies
 
-data class PopularMoviesResult(
+data class MoviesResult(
     val page: Int,
     val movies: List<Movie>,
     val totalPages: Int,

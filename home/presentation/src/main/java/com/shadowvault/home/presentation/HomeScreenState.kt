@@ -1,6 +1,6 @@
 package com.shadowvault.home.presentation
 
-import com.shadowvault.home.domain.remote.Movie
+import com.shadowvault.core.domain.movies.Movie
 
 data class HomeScreenState(
     val isLoading: Boolean = false,

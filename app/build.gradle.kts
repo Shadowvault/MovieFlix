@@ -60,4 +60,8 @@ dependencies {
     implementation(project(":home:data"))
     implementation(project(":home:domain"))
     implementation(project(":home:presentation"))
+
+    implementation(project(":movie-details:data"))
+    implementation(project(":movie-details:domain"))
+    implementation(project(":movie-details:presentation"))
 }

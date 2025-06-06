@@ -1,19 +1,19 @@
-package com.shadowvault.home.data.remote
+package com.shadowvault.core.data.movies
 
-import com.shadowvault.home.domain.remote.PopularMoviesResult
+import com.shadowvault.core.domain.movies.MoviesResult
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PopularMoviesResponse(
+data class MoviesResponse(
     val page: Int,
     val results: List<MovieDto>,
     @SerialName("total_pages") val totalPages: Int,
     @SerialName("total_results") val totalResults: Int
 )
 
-fun PopularMoviesResponse.toPopularMoviesResult(likedIds: Set<Int> = emptySet()): PopularMoviesResult {
-    return PopularMoviesResult(
+fun MoviesResponse.toMoviesResult(likedIds: Set<Int> = emptySet()): MoviesResult {
+    return MoviesResult(
         page = page,
         totalPages = totalPages,
         totalResults = totalResults,

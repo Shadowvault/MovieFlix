@@ -4,16 +4,11 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
@@ -29,7 +24,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.shadowvault.home.domain.remote.Movie
+import com.shadowvault.core.presentation.designsystem.components.RatingProgressBar
+import com.shadowvault.core.domain.movies.Movie
 
 @Composable
 fun MovieCard(
@@ -52,7 +48,7 @@ fun MovieCard(
                     .aspectRatio(2f / 3f),
             ) {
                 Box(modifier = Modifier.fillMaxSize()) {
-                    val posterUrl = "https://image.tmdb.org/t/p/w500${movie.posterPath}"
+                    val posterUrl = movie.posterPath
                     AsyncImage(
                         model = posterUrl,
                         contentDescription = "Poster of ${movie.title}",
@@ -60,7 +56,6 @@ fun MovieCard(
                         modifier = Modifier.fillMaxSize()
                     )
 
-                    // Like button (top-left)
                     IconButton(
                         onClick = onLikeClicked,
                         modifier = Modifier
@@ -84,7 +79,6 @@ fun MovieCard(
                 }
             }
 
-            // Movie title with better font and background for contrast
             Text(
                 text = movie.title,
                 style = MaterialTheme.typography.headlineSmall,
