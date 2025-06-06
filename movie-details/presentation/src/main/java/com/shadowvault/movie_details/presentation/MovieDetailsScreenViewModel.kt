@@ -46,7 +46,7 @@ class MovieDetailsScreenViewModel(
                                 genres = movieDetails.details.genres.map { it.name },
                                 releaseDate = movieDetails.details.releaseDate,
                                 runtimeMinutes = movieDetails.details.runtime,
-                                starRating = movieDetails.details.voteAverage.toFloat(),
+                                starRating = movieDetails.details.voteAverage.toFloat()/2f,
                                 isFavorite = movieDetails.isFavorite,
                                 description = movieDetails.details.overview ?: "",
                                 cast = movieDetails.cast,
