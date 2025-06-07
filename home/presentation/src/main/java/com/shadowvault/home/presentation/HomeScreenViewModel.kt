@@ -3,6 +3,7 @@ package com.shadowvault.home.presentation
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
 import androidx.paging.map
 import com.shadowvault.core.domain.profile.ProfileInfoStorage
 import com.shadowvault.home.domain.MovieRepository
@@ -27,7 +28,7 @@ class HomeScreenViewModel(
     val moviesFlow = _userId.filterNotNull()
         .flatMapLatest { userId ->
             movieRepository.getPagedMovies(userId, viewModelScope)
-        }
+        }.cachedIn(viewModelScope)
 
     private val _state = MutableStateFlow(HomeScreenState())
     val state: StateFlow<HomeScreenState> = _state.asStateFlow()
