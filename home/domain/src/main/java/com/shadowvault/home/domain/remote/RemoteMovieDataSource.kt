@@ -4,6 +4,6 @@ import com.shadowvault.core.domain.movies.MoviesResult
 import com.shadowvault.core.domain.util.DataError
 import com.shadowvault.core.domain.util.Result
 
-interface MoviesRemote {
+interface RemoteMovieDataSource {
     suspend fun getPopularMovies(page: Int): Result<MoviesResult, DataError>
 }

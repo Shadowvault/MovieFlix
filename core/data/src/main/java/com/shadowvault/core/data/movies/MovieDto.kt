@@ -1,5 +1,6 @@
 package com.shadowvault.core.data.movies
 
+import com.shadowvault.core.database.MovieEntity
 import com.shadowvault.core.domain.movies.Movie
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

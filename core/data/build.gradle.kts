@@ -17,4 +17,5 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     implementation(project(":core:domain"))
+    implementation(project(":core:database"))
 }

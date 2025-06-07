@@ -1,5 +1,7 @@
 package com.shadowvault.core.domain.util
 
+import java.io.IOException
+
 sealed interface DataError : Error {
 
     // 🌐 Network and transport-related issues
@@ -45,3 +47,7 @@ sealed interface DataError : Error {
         ) : Remote
     }
 }
+
+fun DataError.toThrowable(): Throwable = IOException("Paging error: $this")
+
+

@@ -3,6 +3,8 @@ plugins {
 }
 
 dependencies {
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.paging.common)
     testImplementation(libs.junit)
 
     implementation(project(":core:domain"))

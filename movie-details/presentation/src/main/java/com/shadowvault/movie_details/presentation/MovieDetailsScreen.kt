@@ -1,6 +1,7 @@
 package com.shadowvault.movie_details.presentation
 
 import android.app.AlertDialog
+import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -22,7 +23,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Icon
@@ -97,6 +98,7 @@ fun MovieDetailsScreen(
     onAction: (MovieDetailsScreenAction) -> Unit,
 ) {
     val scrollState = rememberScrollState()
+
     Column(
         modifier = Modifier
             .windowInsetsPadding(WindowInsets.statusBars)
@@ -121,7 +123,7 @@ fun MovieDetailsScreen(
                     .background(MaterialTheme.colorScheme.surface, CircleShape)
             ) {
                 Icon(
-                    imageVector = Icons.Default.ArrowBack,
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = "Back"
                 )
             }
@@ -251,6 +253,8 @@ fun MovieDetailsScreen(
             Spacer(modifier = Modifier.height(32.dp))
         }
     }
+
+
 }
 
 

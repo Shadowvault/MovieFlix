@@ -1,0 +1,75 @@
+package com.shadowvault.home.data
+
+import MovieRemoteMediator
+import android.util.Log
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import androidx.paging.map
+import androidx.room.RoomDatabase
+import com.shadowvault.core.database.DatabaseTransactionHelper
+import com.shadowvault.core.database.MovieDao
+import com.shadowvault.core.database.MovieEntity
+import com.shadowvault.core.database.MovieFlixDatabase
+import com.shadowvault.core.database.keys.RemoteKeysDao
+import com.shadowvault.core.database.toMovie
+import com.shadowvault.core.domain.LocalMovieDataSource
+import com.shadowvault.core.domain.movies.Movie
+import com.shadowvault.core.domain.movies.MoviesResult
+import com.shadowvault.core.domain.util.DataError
+import com.shadowvault.core.domain.util.Result
+import com.shadowvault.core.domain.util.fold
+import com.shadowvault.home.domain.MovieRepository
+import com.shadowvault.home.domain.remote.RemoteMovieDataSource
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.withContext
+
+class MovieRepositoryImpl(
+    private val database: MovieFlixDatabase,
+    private val moviesLocal: LocalMovieDataSource,
+    private val moviesRemote: RemoteMovieDataSource,
+    private val movieDao: MovieDao,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+) : MovieRepository {
+
+    @OptIn(ExperimentalPagingApi::class)
+    override fun getPagedMovies(userId: Int, scope: CoroutineScope): Flow<PagingData<Movie>> {
+        val pagerFlow = Pager(
+            config = PagingConfig(
+                pageSize = 20,
+                prefetchDistance = 1,
+                initialLoadSize = 20,
+            ),
+            pagingSourceFactory = { movieDao.getPagedMovies() },
+            remoteMediator = MovieRemoteMediator(moviesRemote, database)
+        ).flow.cachedIn(scope)
+
+        val likedMovieIdsFlow = movieDao.getLikedMovieIdsFlow(userId)
+
+        return pagerFlow.combine(likedMovieIdsFlow) { pagingData, likedIds ->
+            pagingData.map { movieEntity ->
+                movieEntity.toMovie().copy(isLiked = likedIds.contains(movieEntity.id))
+            }
+        }
+    }
+
+    override suspend fun toggleLike(userId: Int, movieId: Int, like: Boolean) =
+        withContext(ioDispatcher) {
+            if (like) {
+                moviesLocal.likeMovie(userId, movieId)
+            } else {
+                moviesLocal.unlikeMovie(userId, movieId)
+            }
+        }
+}

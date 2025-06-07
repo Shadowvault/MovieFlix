@@ -49,6 +49,7 @@ dependencies {
     implementation(libs.timber)
 
     implementation(project(":core:data"))
+    implementation(project(":core:database"))
     implementation(project(":core:domain"))
     implementation(project(":core:presentation:ui"))
     implementation(project(":core:presentation:designsystem"))

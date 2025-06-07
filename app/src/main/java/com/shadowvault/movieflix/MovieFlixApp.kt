@@ -5,6 +5,7 @@ import com.shadowvault.auth.data.di.authDataModule
 import com.shadowvault.auth.presentation.di.authViewModelModule
 import com.shadowvault.movieflix.di.appModule
 import com.shadowvault.core.data.di.coreDataModule
+import com.shadowvault.core.database.di.coreDatabaseModule
 import com.shadowvault.home.data.di.homeDataModule
 import com.shadowvault.home.presentation.di.homeViewModelModule
 import com.shadowvault.movie_details.data.di.movieDetailsDataModule
@@ -32,6 +33,7 @@ class MovieFlixApp: Application() {
             modules(
                 appModule,
                 coreDataModule,
+                coreDatabaseModule,
                 authDataModule,
                 authViewModelModule,
                 homeDataModule,

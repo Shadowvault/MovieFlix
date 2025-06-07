@@ -25,7 +25,6 @@ fun LinearRatingStars(
     val colors = MaterialTheme.colorScheme
     val fillColor = colors.primary
     val backgroundColor = colors.surfaceVariant
-
     Row(modifier = modifier) {
         for (i in 1..starCount) {
             val fillFraction = when {
@@ -87,7 +86,7 @@ private fun androidx.compose.ui.graphics.drawscope.DrawScope.drawStar(color: Col
 fun LinearRatingStarsPreview() {
     MovieFlixTheme {
         Surface {
-            LinearRatingStars(2.4f,)
+            LinearRatingStars(4.2f,)
         }
     }
 }
