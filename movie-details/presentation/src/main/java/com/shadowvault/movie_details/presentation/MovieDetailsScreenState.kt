@@ -6,6 +6,7 @@ import com.shadowvault.movie_details.domain.model.reviews.Review
 
 data class MovieDetailsScreenState(
     val isLoading: Boolean = false,
+    val movieId: Int = 0,
     val title: String = "",
     val backdropPath: String? = null,
     val posterPath: String? = null,

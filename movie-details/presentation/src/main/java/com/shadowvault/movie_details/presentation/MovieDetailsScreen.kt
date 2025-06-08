@@ -54,6 +54,7 @@ import org.koin.androidx.compose.koinViewModel
 fun MovieDetailsScreenRoot(
     viewModel: MovieDetailsScreenViewModel = koinViewModel(),
     movieId: Int,
+    isLiked: Boolean,
     onBackButtonPress: () -> Unit
 ) {
 
@@ -61,7 +62,7 @@ fun MovieDetailsScreenRoot(
     val context = LocalContext.current
 
     LaunchedEffect(Unit) {
-        viewModel.onAction(MovieDetailsScreenAction.Init(movieId))
+        viewModel.onAction(MovieDetailsScreenAction.Init(movieId, isLiked))
     }
 
     ObserveAsEvents(viewModel.events) { event ->
@@ -128,7 +129,9 @@ fun MovieDetailsScreen(
                 )
             }
             IconButton(
-                onClick = {},
+                onClick = {
+                    onAction(MovieDetailsScreenAction.OnMovieFavoritePress)
+                },
                 modifier = Modifier
                     .padding(16.dp)
                     .align(Alignment.TopEnd)

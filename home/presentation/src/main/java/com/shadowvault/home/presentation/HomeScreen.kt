@@ -46,7 +46,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun HomeScreenRoot(
     viewModel: HomeScreenViewModel = koinViewModel(),
-    onMovieClicked: (Int) -> Unit
+    onMovieClicked: (Int, Boolean) -> Unit
 ) {
 
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -77,7 +77,7 @@ fun HomeScreenRoot(
         onAction = { action ->
             when (action) {
                 is HomeScreenAction.OnMoviePress -> {
-                    onMovieClicked(action.movieId)
+                    onMovieClicked(action.movieId, action.isLiked)
                 }
 
                 else -> Unit
@@ -149,7 +149,7 @@ fun HomeScreen(
                                 onAction(HomeScreenAction.OnMovieFavoritePress(movie.id, isLiked))
                             },
                             onCardClicked = {
-                                onAction(HomeScreenAction.OnMoviePress(movie.id))
+                                onAction(HomeScreenAction.OnMoviePress(movie.id, movie.isLiked))
                             }
                         )
                     }

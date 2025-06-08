@@ -2,7 +2,8 @@
 agp = "8.10.1"
 kotlin = "2.1.21"
 coreKtx = "1.16.0"
-junit = "4.13.2"
+junit4 = "4.13.2"
+junit5 = "5.13.0"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 lifecycleRuntimeKtx = "2.9.0"
@@ -46,6 +47,10 @@ playServicesMaps = "19.2.0"
 annotation = "1.9.1"
 jwtdecode = "2.0.1"
 
+mockk = "1.14.2"
+turbine = "1.2.0"
+truth = "1.4.4"
+
 # Project versions
 projectApplicationId = "com.shadowvault.movieflix"
 projectVersionName = "1.0"
@@ -68,7 +73,14 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines"}
 kotlinx-coroutines-play-services = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "coroutines"}
 desugar-jdk-libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar_jdk_libs" }
-junit = { group = "junit", name = "junit", version.ref = "junit" }
+
+junit = { group = "junit", name = "junit", version.ref = "junit4" }
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit5" }
+coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
+truth = { module = "com.google.truth:truth", version.ref = "truth" }
+
 androidx-work = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "work" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }

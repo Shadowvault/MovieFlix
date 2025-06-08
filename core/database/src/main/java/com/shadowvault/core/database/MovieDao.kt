@@ -22,6 +22,9 @@ interface MovieDao {
     @Query("SELECT movieId FROM liked_movies WHERE userId = :userId")
     fun getLikedMovieIdsFlow(userId: Int): Flow<List<Int>>
 
+    @Query("SELECT EXISTS(SELECT 1 FROM liked_movies WHERE userId = :userId AND movieId = :movieId)")
+    fun isMovieLikedFlow(userId: Int, movieId: Int): Flow<Boolean>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun likeMovie(likedMovieEntity: LikedMovieEntity)
 

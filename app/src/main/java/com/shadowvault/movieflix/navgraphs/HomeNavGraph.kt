@@ -12,8 +12,8 @@ fun NavGraphBuilder.homeNavGraph(navController: NavHostController) {
 
     composable<MainRoute.Home> {
         HomeScreenRoot(
-            onMovieClicked = { movieId ->
-                navController.navigate(MainRoute.Home.MovieDetails(movieId))
+            onMovieClicked = { movieId, isLiked ->
+                navController.navigate(MainRoute.Home.MovieDetails(movieId, isLiked))
             }
         )
     }
@@ -21,6 +21,7 @@ fun NavGraphBuilder.homeNavGraph(navController: NavHostController) {
         val arg = it.toRoute<MainRoute.Home.MovieDetails>()
         MovieDetailsScreenRoot(
             movieId = arg.movieInt,
+            isLiked = arg.isLiked,
             onBackButtonPress = { navController.navigateUp() }
         )
     }
@@ -30,6 +31,6 @@ sealed class MainRoute {
     @Serializable
     data object Home : MainRoute() {
         @Serializable
-        data class MovieDetails(val movieInt: Int)
+        data class MovieDetails(val movieInt: Int, val isLiked: Boolean)
     }
 }

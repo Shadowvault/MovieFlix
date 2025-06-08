@@ -31,6 +31,10 @@ class RoomMovieDataSource(
         return movieDao.getLikedMovieIdsFlow(userId)
     }
 
+    override fun isMovieLikedFlow(userId: Int, movieId: Int): Flow<Boolean> {
+        return movieDao.isMovieLikedFlow(userId, movieId)
+    }
+
     override suspend fun likeMovie(userId: Int, movieId: Int) {
         movieDao.likeMovie(LikedMovieEntity(userId, movieId))
 
