@@ -47,6 +47,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.shadowvault.core.presentation.designsystem.MovieFlixTheme
+import com.shadowvault.core.presentation.designsystem.components.ExpandableText
 import com.shadowvault.core.presentation.designsystem.components.LinearRatingStars
 import com.shadowvault.core.presentation.ui.ObserveAsEvents
 import com.shadowvault.core.presentation.ui.util.shareUrl
@@ -223,10 +224,8 @@ fun MovieDetailsScreen(
                 text = "Cast",
                 style = MaterialTheme.typography.titleMedium
             )
-            Text(
-                text = state.cast.joinToString { it.name },
-                style = MaterialTheme.typography.bodyMedium
-            )
+
+            ExpandableText(state.cast.joinToString { it.name })
 
             Spacer(Modifier.height(16.dp))
 
@@ -241,10 +240,7 @@ fun MovieDetailsScreen(
                         style = MaterialTheme.typography.labelLarge,
                         color = MaterialTheme.colorScheme.secondary
                     )
-                    Text(
-                        text = review.content,
-                        style = MaterialTheme.typography.bodySmall
-                    )
+                    ExpandableText(text = review.content)
                 }
             }
 
