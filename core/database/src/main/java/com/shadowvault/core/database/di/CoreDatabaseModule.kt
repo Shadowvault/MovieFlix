@@ -1,7 +1,6 @@
 package com.shadowvault.core.database.di
 
 import androidx.room.Room
-import com.shadowvault.core.database.DatabaseTransactionHelper
 import com.shadowvault.core.database.MovieFlixDatabase
 import com.shadowvault.core.database.RoomMovieDataSource
 import com.shadowvault.core.domain.LocalMovieDataSource
@@ -22,5 +21,5 @@ val coreDatabaseModule = module {
     single { get<MovieFlixDatabase>().movieDao }
     single { get<MovieFlixDatabase>().remoteKeysDao }
     singleOf(::RoomMovieDataSource).bind<LocalMovieDataSource>()
-    singleOf(::DatabaseTransactionHelper)
+
 }
