@@ -8,6 +8,7 @@ data class MovieDetailsScreenState(
     val isLoading: Boolean = false,
     val movieId: Int = 0,
     val title: String = "",
+    val url: String? = null,
     val backdropPath: String? = null,
     val posterPath: String? = null,
     val genres: List<String> = emptyList(),

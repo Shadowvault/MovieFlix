@@ -47,10 +47,12 @@ class MovieDetailsScreenViewModel(
                 viewModelScope.launch {
                     getMovieDetailsUseCase(action.movieId).collect { movieDetails ->
                         _state.update { state ->
+                            movieDetails.details.imdbId
                             state.copy(
                                 isLoading = false,
                                 movieId = action.movieId,
                                 title = movieDetails.details.title,
+                                url = "https://www.imdb.com/title/${movieDetails.details.imdbId}",
                                 backdropPath = movieDetails.details.backdropPath,
                                 posterPath = movieDetails.details.posterPath,
                                 genres = movieDetails.details.genres.map { it.name },
@@ -113,6 +115,5 @@ class MovieDetailsScreenViewModel(
                 }
         }
     }
-
 
 }

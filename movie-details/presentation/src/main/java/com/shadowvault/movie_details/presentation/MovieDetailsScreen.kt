@@ -1,7 +1,6 @@
 package com.shadowvault.movie_details.presentation
 
 import android.app.AlertDialog
-import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
@@ -26,6 +26,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -48,6 +49,7 @@ import coil.compose.AsyncImage
 import com.shadowvault.core.presentation.designsystem.MovieFlixTheme
 import com.shadowvault.core.presentation.designsystem.components.LinearRatingStars
 import com.shadowvault.core.presentation.ui.ObserveAsEvents
+import com.shadowvault.core.presentation.ui.util.shareUrl
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -98,6 +100,8 @@ fun MovieDetailsScreen(
     state: MovieDetailsScreenState,
     onAction: (MovieDetailsScreenAction) -> Unit,
 ) {
+
+    val context = LocalContext.current
     val scrollState = rememberScrollState()
 
     Column(
@@ -121,7 +125,10 @@ fun MovieDetailsScreen(
                 modifier = Modifier
                     .padding(16.dp)
                     .align(Alignment.TopStart)
-                    .background(MaterialTheme.colorScheme.surface, CircleShape)
+                    .background(
+                        color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.7f),
+                        shape = MaterialTheme.shapes.medium
+                    )
             ) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
@@ -135,12 +142,35 @@ fun MovieDetailsScreen(
                 modifier = Modifier
                     .padding(16.dp)
                     .align(Alignment.TopEnd)
-                    .background(MaterialTheme.colorScheme.surface, CircleShape)
+                    .background(
+                        color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.7f),
+                        shape = MaterialTheme.shapes.medium
+                    )
             ) {
                 Icon(
                     imageVector = if (state.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                     contentDescription = "Toggle Favorite"
                 )
+            }
+
+            state.url?.let {
+                IconButton(
+                    onClick = {
+                        shareUrl(context, it)
+                    },
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .align(Alignment.BottomEnd)
+                        .background(
+                            color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.7f),
+                            shape = MaterialTheme.shapes.medium
+                        )
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Share,
+                        contentDescription = "Share"
+                    )
+                }
             }
         }
 
@@ -256,10 +286,7 @@ fun MovieDetailsScreen(
             Spacer(modifier = Modifier.height(32.dp))
         }
     }
-
-
 }
-
 
 @Preview
 @Composable
