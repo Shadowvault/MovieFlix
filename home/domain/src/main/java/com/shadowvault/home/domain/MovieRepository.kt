@@ -11,4 +11,5 @@ import kotlinx.coroutines.flow.Flow
 interface MovieRepository {
     fun getPagedMovies(userId: Int, scope: CoroutineScope): Flow<PagingData<Movie>>
     suspend fun toggleLike(userId: Int, movieId: Int, like: Boolean)
+    suspend fun clear()
 }

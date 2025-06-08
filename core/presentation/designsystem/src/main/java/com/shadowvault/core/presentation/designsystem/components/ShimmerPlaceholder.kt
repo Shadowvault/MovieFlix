@@ -29,8 +29,8 @@ fun Modifier.shimmerPlaceholder(
             ), label = "shimmer-translate"
         )
 
-        val baseColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f)
-        val highlightColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.6f)
+        val baseColor = MaterialTheme.colorScheme.surfaceVariant
+        val highlightColor = MaterialTheme.colorScheme.surface
 
         val brush = Brush.linearGradient(
             colors = listOf(baseColor, highlightColor, baseColor),

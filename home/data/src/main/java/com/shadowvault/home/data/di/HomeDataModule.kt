@@ -16,6 +16,7 @@ val homeDataModule = module {
             moviesLocal = get(),
             moviesRemote = get(),
             movieDao = get(),
+            keysDao = get()
         )
     }
 }

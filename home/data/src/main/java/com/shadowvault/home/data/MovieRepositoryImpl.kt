@@ -9,6 +9,7 @@ import androidx.paging.cachedIn
 import androidx.paging.map
 import com.shadowvault.core.database.MovieDao
 import com.shadowvault.core.database.MovieFlixDatabase
+import com.shadowvault.core.database.keys.RemoteKeysDao
 import com.shadowvault.core.database.toMovie
 import com.shadowvault.core.domain.LocalMovieDataSource
 import com.shadowvault.core.domain.movies.Movie
@@ -26,6 +27,7 @@ class MovieRepositoryImpl(
     private val moviesLocal: LocalMovieDataSource,
     private val moviesRemote: RemoteMovieDataSource,
     private val movieDao: MovieDao,
+    private val keysDao: RemoteKeysDao,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : MovieRepository {
 
@@ -58,4 +60,9 @@ class MovieRepositoryImpl(
                 moviesLocal.unlikeMovie(userId, movieId)
             }
         }
+
+    override suspend fun clear() {
+        movieDao.clearAllMovies()
+        keysDao.clearRemoteKeys()
+    }
 }

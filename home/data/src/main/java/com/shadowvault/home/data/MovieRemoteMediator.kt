@@ -102,10 +102,10 @@ class MovieRemoteMediator(
                             nextKey = nextKey
                         )
                     }
-
+                    val currentTime = System.currentTimeMillis()
                     movieDatabase.remoteKeysDao.insertAll(remoteKeys)
                     movieDatabase.movieDao.insertAll(movies.mapIndexed { _, movie ->
-                        movie.toMovieEntity(page = page)
+                        movie.toMovieEntity(page = page, currentTime = currentTime)
                     })
                 }
                 return MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)

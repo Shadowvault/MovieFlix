@@ -23,6 +23,7 @@ data class MovieEntity(
     val isVideo: Boolean,
     @ColumnInfo(name = "page")
     val page: Int,
+    val currentTime: Long
 )
 
 fun MovieEntity.toMovie(isLiked: Boolean = false): Movie = Movie(
@@ -43,7 +44,7 @@ fun MovieEntity.toMovie(isLiked: Boolean = false): Movie = Movie(
     isLiked = isLiked
 )
 
-fun Movie.toMovieEntity(page: Int): MovieEntity = MovieEntity(
+fun Movie.toMovieEntity(page: Int, currentTime: Long): MovieEntity = MovieEntity(
     id = id,
     title = title,
     overview = overview,
@@ -58,6 +59,7 @@ fun Movie.toMovieEntity(page: Int): MovieEntity = MovieEntity(
     popularity = popularity,
     genreIds = genreIds,
     isVideo = isVideo,
-    page = page
+    page = page,
+    currentTime = currentTime
 )
 

@@ -1,15 +1,15 @@
 package com.shadowvault.home.presentation
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
-import androidx.paging.map
 import com.shadowvault.core.domain.profile.ProfileInfoStorage
 import com.shadowvault.home.domain.MovieRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.filterNotNull
@@ -47,6 +47,19 @@ class HomeScreenViewModel(
         when (action) {
             is HomeScreenAction.OnMovieFavoritePress -> {
                 toggleLike(action.movieId, action.isLiked)
+            }
+
+            HomeScreenAction.OnForceRefresh -> {
+                viewModelScope.launch {
+                    eventChannel.send(HomeScreenEvent.ForceRefreshRequested)
+                }
+            }
+
+            is HomeScreenAction.OnClear -> {
+                viewModelScope.launch {
+                    movieRepository.clear()
+                    action.pagedMovies.refresh()
+                }
             }
 
             else -> Unit

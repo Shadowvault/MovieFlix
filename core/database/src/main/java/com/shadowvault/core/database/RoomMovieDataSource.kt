@@ -17,8 +17,9 @@ class RoomMovieDataSource(
     }
 
     override suspend fun insertAllMovies(movies: List<Movie>, page: Int): Result<List<Int>, DataError.Local> {
+        val currentTime = System.currentTimeMillis()
         return try {
-            val entities = movies.map { it.toMovieEntity(page = page) }
+            val entities = movies.map { it.toMovieEntity(page = page, currentTime) }
             movieDao.insertAll(entities)
             Result.Success(entities.map { it.id })
         } catch (e: Exception) {
