@@ -47,7 +47,6 @@ class MovieDetailsScreenViewModel(
                 viewModelScope.launch {
                     getMovieDetailsUseCase(action.movieId).collect { movieDetails ->
                         _state.update { state ->
-                            movieDetails.details.imdbId
                             state.copy(
                                 isLoading = false,
                                 movieId = action.movieId,
