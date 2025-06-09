@@ -1,10 +1,13 @@
 package com.shadowvault.home.presentation
 
 import android.app.AlertDialog
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -102,78 +105,102 @@ fun HomeScreen(
     val isError = pagedMovies.loadState.refresh is LoadState.Error
     val pullToRefreshState = rememberPullToRefreshState()
 
-    PullToRefreshBox(
-        state = pullToRefreshState,
-        onRefresh = { onAction(HomeScreenAction.OnForceRefresh) },
-        isRefreshing = isRefreshing,
-        modifier = Modifier.windowInsetsPadding(WindowInsets.statusBars),
-        contentAlignment = Alignment.TopCenter
+    Column(
+        modifier = Modifier
+            .windowInsetsPadding(WindowInsets.statusBars)
+            .fillMaxSize()
     ) {
-        LazyColumn(
-            state = listState,
-            contentPadding = PaddingValues(12.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-            modifier = Modifier.windowInsetsPadding(WindowInsets.statusBars)
+        Text(
+            text = "Now Showing",
+            style = MaterialTheme.typography.headlineSmall,
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(MaterialTheme.colorScheme.background)
+                .padding(16.dp)
+        )
+        PullToRefreshBox(
+            state = pullToRefreshState,
+            onRefresh = { onAction(HomeScreenAction.OnForceRefresh) },
+            isRefreshing = isRefreshing,
+            modifier = Modifier
+                .windowInsetsPadding(WindowInsets.statusBars)
+                .fillMaxSize()
+                .weight(1f),
+            contentAlignment = Alignment.TopCenter
         ) {
-            if (isRefreshing && pagedMovies.itemCount == 0) {
-                items(3) {
-                    MovieCardSkeleton()
-                }
-            }
-            else if(isError && pagedMovies.itemCount == 0) {
-                item {
-                    Box(
-                        Modifier
-                            .fillMaxWidth()
-                            .height(400.dp),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = "No movies found.\nPull down to refresh.",
-                            style = MaterialTheme.typography.bodyMedium,
-                            textAlign = TextAlign.Center
-                        )
+            LazyColumn(
+                state = listState,
+                contentPadding = PaddingValues(12.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+            ) {
+                if (isRefreshing && pagedMovies.itemCount == 0) {
+                    items(3) {
+                        MovieCardSkeleton()
                     }
-                }
-
-            }else {
-                items(
-                    count = pagedMovies.itemCount,
-                    key = { index -> pagedMovies[index]?.id ?: index }
-                ) { index ->
-                    val movie = pagedMovies[index]
-                    if (movie != null) {
-                        MovieCard(
-                            movie = movie,
-                            onLikeClicked = { isLiked ->
-                                onAction(HomeScreenAction.OnMovieFavoritePress(movie.id, isLiked))
-                            },
-                            onCardClicked = {
-                                onAction(HomeScreenAction.OnMoviePress(movie.id, movie.isLiked))
-                            }
-                        )
-                    }
-                }
-            }
-
-            item {
-                when (pagedMovies.loadState.append) {
-                    is LoadState.Loading -> {
-                        if (!isRefreshing) {
-                            CircularProgressIndicator(
-                                Modifier
-                                    .padding(16.dp)
-                                    .align(Alignment.Center)
+                } else if (isError && pagedMovies.itemCount == 0) {
+                    item {
+                        Box(
+                            Modifier
+                                .fillMaxWidth()
+                                .height(400.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "No movies found.\nPull down to refresh.",
+                                style = MaterialTheme.typography.bodyMedium,
+                                textAlign = TextAlign.Center
                             )
                         }
                     }
 
-                    is LoadState.Error -> Text("Error loading more", color = Color.Red)
-                    else -> {}
+                } else {
+                    items(
+                        count = pagedMovies.itemCount,
+                        key = { index -> pagedMovies[index]?.id ?: index }
+                    ) { index ->
+                        val movie = pagedMovies[index]
+                        if (movie != null) {
+                            MovieCard(
+                                movie = movie,
+                                onLikeClicked = { isLiked ->
+                                    onAction(
+                                        HomeScreenAction.OnMovieFavoritePress(
+                                            movie.id,
+                                            isLiked
+                                        )
+                                    )
+                                },
+                                onCardClicked = {
+                                    onAction(HomeScreenAction.OnMoviePress(movie.id, movie.isLiked))
+                                }
+                            )
+                        }
+                    }
+                }
+
+                item {
+                    when (pagedMovies.loadState.append) {
+                        is LoadState.Loading -> {
+                            if (!isRefreshing) {
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(16.dp),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    CircularProgressIndicator()
+                                }
+                            }
+                        }
+
+                        is LoadState.Error -> Text("Error loading more", color = Color.Red)
+                        else -> {}
+                    }
                 }
             }
         }
     }
+
 }
 
 
