@@ -28,6 +28,7 @@ class HttpClientFactory {
                     }
                 )
             }
+            @Suppress("MagicNumber")
             install(HttpTimeout) {
                 requestTimeoutMillis = 15_000
                 connectTimeoutMillis = 10_000

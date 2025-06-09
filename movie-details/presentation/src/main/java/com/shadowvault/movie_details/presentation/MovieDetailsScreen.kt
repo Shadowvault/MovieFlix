@@ -74,8 +74,6 @@ fun MovieDetailsScreenRoot(
                     setMessage(event.errorAlertText.description.asString(context))
                 }.show()
             }
-
-            else -> Unit
         }
     }
     MovieDetailsScreen(
@@ -92,7 +90,6 @@ fun MovieDetailsScreenRoot(
         }
     )
 }
-
 
 @Composable
 fun MovieDetailsScreen(

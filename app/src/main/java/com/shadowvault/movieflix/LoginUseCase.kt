@@ -7,8 +7,8 @@ import com.shadowvault.core.domain.profile.ProfileInfoStorage
 import com.shadowvault.core.domain.session.SessionInfo
 import com.shadowvault.core.domain.session.SessionStorage
 import com.shadowvault.core.domain.util.DataError
-import com.shadowvault.core.domain.util.fold
 import com.shadowvault.core.domain.util.Result
+import com.shadowvault.core.domain.util.fold
 
 class LoginUseCase(
     private val accountRepository: AccountRepository,
@@ -16,14 +16,14 @@ class LoginUseCase(
     private val profileInfoStorage: ProfileInfoStorage
 ) {
     suspend operator fun invoke(requestToken: String): Result<Unit, DataError> {
-        return accountRepository.createSession(CreateSessionParams(requestToken)).fold(
-            onSuccess = { sessionData ->
+        return accountRepository.createSession(CreateSessionParams(requestToken))
+            .fold(onSuccess = { sessionData ->
                 val sessionInfo = SessionInfo(
                     sessionId = sessionData.sessionId,
                 )
                 sessionStorage.set(sessionInfo)
-                accountRepository.getAccountDetails(sessionData.sessionId).fold(
-                    onSuccess = { userDetails ->
+                accountRepository.getAccountDetails(sessionData.sessionId)
+                    .fold(onSuccess = { userDetails ->
                         val profileInfo = ProfileInfo(
                             username = userDetails.username,
                             name = userDetails.name,
@@ -32,16 +32,11 @@ class LoginUseCase(
                         )
                         profileInfoStorage.set(profileInfo)
                         Result.Success(Unit)
-                    },
-                    onError = { userError ->
+                    }, onError = { userError ->
                         Result.Error(userError)
-                    }
-                )
-            },
-            onError = { sessionError ->
+                    })
+            }, onError = { sessionError ->
                 Result.Error(sessionError)
-            }
-        )
+            })
     }
 }
-

@@ -128,7 +128,7 @@ fun MovieCard(
     }
 }
 
-
+@Suppress("MaximumLineLength", "MaxLineLength", "MagicNumber")
 @Preview
 @Composable
 fun MovieCardPreview() {
@@ -153,13 +153,10 @@ fun MovieCardPreview() {
                     isLiked = false
                 ),
                 onCardClicked = {
-
                 },
                 onLikeClicked = {
-
                 }
             )
         }
     }
 }
-

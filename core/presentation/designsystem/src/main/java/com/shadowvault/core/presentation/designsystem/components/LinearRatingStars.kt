@@ -1,3 +1,5 @@
+@file:Suppress("MagicNumber")
+
 package com.shadowvault.core.presentation.designsystem.components
 
 import androidx.compose.foundation.Canvas
@@ -44,7 +46,7 @@ fun LinearRatingStars(
 
 @Composable
 fun StarWithFill(
-    fillFraction: Float,  // 0f..1f
+    fillFraction: Float, // 0f..1f
     size: Dp,
     fillColor: Color,
     backgroundColor: Color
@@ -86,9 +88,7 @@ private fun androidx.compose.ui.graphics.drawscope.DrawScope.drawStar(color: Col
 fun LinearRatingStarsPreview() {
     MovieFlixTheme {
         Surface {
-            LinearRatingStars(4.2f,)
+            LinearRatingStars(4.2f)
         }
     }
 }
-
-

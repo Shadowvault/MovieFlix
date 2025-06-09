@@ -1,7 +1,6 @@
 package com.shadowvault.core.data.profile
 
 import com.shadowvault.core.domain.profile.ProfileInfo
-import com.shadowvault.core.domain.session.SessionInfo
 import kotlinx.serialization.Serializable
 
 @Serializable

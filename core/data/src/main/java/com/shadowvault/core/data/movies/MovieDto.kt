@@ -1,6 +1,5 @@
 package com.shadowvault.core.data.movies
 
-import com.shadowvault.core.database.MovieEntity
 import com.shadowvault.core.domain.movies.Movie
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -28,8 +27,8 @@ fun MovieDto.toMovie(isLiked: Boolean = false): Movie {
         id = id,
         title = title,
         overview = overview,
-        posterPath = "https://image.tmdb.org/t/p/w500${posterPath}",
-        backdropPath = "https://image.tmdb.org/t/p/w780${backdropPath}",
+        posterPath = "https://image.tmdb.org/t/p/w500$posterPath",
+        backdropPath = "https://image.tmdb.org/t/p/w780$backdropPath",
         releaseDate = releaseDate,
         voteAverage = voteAverage,
         voteCount = voteCount,

@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.shadowvault.movieflix.di
 
 import android.content.Context

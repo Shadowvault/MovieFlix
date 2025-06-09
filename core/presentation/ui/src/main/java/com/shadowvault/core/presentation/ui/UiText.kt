@@ -10,23 +10,25 @@ import kotlinx.serialization.Serializable
 @Serializable
 sealed interface UiText {
     @Serializable
-    data class DynamicString(val value: String): UiText
+    data class DynamicString(val value: String) : UiText
     @Serializable
     class StringResource(
         @StringRes val id: Int,
         @Contextual val args: List<UiArg> = listOf()
-    ): UiText
+    ) : UiText
 
+    @Suppress("SpreadOperator")
     @Composable
     fun asString(): String {
-        return when(this) {
+        return when (this) {
             is DynamicString -> value
             is StringResource -> stringResource(id, *args.map { it.unwrap() }.toTypedArray())
         }
     }
 
+    @Suppress("SpreadOperator")
     fun asString(context: Context): String {
-        return when(this) {
+        return when (this) {
             is DynamicString -> value
             is StringResource -> context.getString(id, *args.map { it.unwrap() }.toTypedArray())
         }

@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.movieflix.android.library)
     alias(libs.plugins.movieflix.android.room)
+    alias(libs.plugins.detekt)
 }
 
 android {
@@ -14,4 +15,8 @@ dependencies {
     implementation(libs.bundles.koin)
 
     implementation(project(":core:domain"))
+
+    detektPlugins(libs.detekt.formatting)
+    detektPlugins(libs.detekt.libraries)
+    detektPlugins(libs.detekt.ruleAuthors)
 }

@@ -47,6 +47,8 @@ playServicesMaps = "19.2.0"
 annotation = "1.9.1"
 jwtdecode = "2.0.1"
 
+detekt = "1.23.8"
+
 mockk = "1.14.2"
 turbine = "1.2.0"
 truth = "1.4.4"
@@ -123,6 +125,9 @@ play-services-maps = { group = "com.google.android.gms", name = "play-services-m
 google-maps-android-utils-ktx = { module = "com.google.maps.android:maps-utils-ktx", version.ref = "mapsUtils"}
 annotation = { group = "androidx.annotation", name = "annotation", version.ref = "annotation" }
 jwtdecode = { group = "com.auth0.android", name = "jwtdecode", version.ref = "jwtdecode" }
+detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
+detekt-libraries = { module = "io.gitlab.arturbosch.detekt:detekt-rules-libraries", version.ref = "detekt" }
+detekt-ruleAuthors = { module = "io.gitlab.arturbosch.detekt:detekt-rules-ruleauthors", version.ref = "detekt" }
 
 # Gradle
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
@@ -142,7 +147,7 @@ room = { id = "androidx.room", version.ref = "room" }
 org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "org-jetbrains-kotlin-jvm" }
 mapsplatform-secrets-plugin = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "secretsPlugin"}
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 movieflix-android-application = { id = "movieflix.android.application", version = "unspecified" }
 movieflix-android-application-compose = { id = "movieflix.android.application.compose", version = "unspecified" }
 movieflix-android-library = { id = "movieflix.android.library", version = "unspecified" }

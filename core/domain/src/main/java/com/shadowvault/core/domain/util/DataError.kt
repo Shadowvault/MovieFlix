@@ -1,3 +1,5 @@
+@file:Suppress("NoMultipleSpaces")
+
 package com.shadowvault.core.domain.util
 
 import java.io.IOException
@@ -7,16 +9,16 @@ sealed interface DataError : Error {
     // 🌐 Network and transport-related issues
     enum class Network : DataError {
         NO_NETWORK,
-        NO_INTERNET,             // No connection available
-        SERVER_REQUEST_TIMEOUT,  // Request took too long
-        CLIENT_REQUEST_TIMEOUT,   // HttpRequestTimeoutException - full request duration exceeded
-        CONNECTION_TIMEOUT,       // ConnectTimeoutException - can't reach server
+        NO_INTERNET,            // No connection available
+        SERVER_REQUEST_TIMEOUT, // Request took too long
+        CLIENT_REQUEST_TIMEOUT, // HttpRequestTimeoutException - full request duration exceeded
+        CONNECTION_TIMEOUT,     // ConnectTimeoutException - can't reach server
         SOCKET_TIMEOUT,
-        SERVER_UNREACHABLE,      // Host unreachable or DNS failure
-        SSL_ERROR,               // Certificate issue
-        UNKNOWN_HOST,            // Could not resolve host
-        SERIALIZATION,           // JSON parsing failed
-        UNKNOWN                  // Anything uncategorized
+        SERVER_UNREACHABLE,     // Host unreachable or DNS failure
+        SSL_ERROR,              // Certificate issue
+        UNKNOWN_HOST,           // Could not resolve host
+        SERIALIZATION,          // JSON parsing failed
+        UNKNOWN                 // Anything uncategorized
     }
 
     // 🧱 Local (device/storage/permissions) issues
@@ -49,5 +51,3 @@ sealed interface DataError : Error {
 }
 
 fun DataError.toThrowable(): Throwable = IOException("Paging error: $this")
-
-

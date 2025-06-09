@@ -62,4 +62,3 @@ fun Movie.toMovieEntity(page: Int, currentTime: Long): MovieEntity = MovieEntity
     page = page,
     currentTime = currentTime
 )
-

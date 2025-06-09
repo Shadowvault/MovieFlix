@@ -1,4 +1,3 @@
-import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
@@ -8,7 +7,6 @@ import com.shadowvault.core.database.MovieEntity
 import com.shadowvault.core.database.MovieFlixDatabase
 import com.shadowvault.core.database.keys.RemoteKeysEntity
 import com.shadowvault.core.database.toMovieEntity
-import com.shadowvault.core.domain.movies.Movie
 import com.shadowvault.core.domain.util.fold
 import com.shadowvault.core.domain.util.toThrowable
 import com.shadowvault.home.domain.remote.RemoteMovieDataSource
@@ -23,8 +21,10 @@ class MovieRemoteMediator(
     override suspend fun initialize(): InitializeAction {
         val cacheTimeout = TimeUnit.MILLISECONDS.convert(1, TimeUnit.HOURS)
 
-        return if (System.currentTimeMillis() - (movieDatabase.remoteKeysDao.getCreationTime()
-                ?: 0) < cacheTimeout
+        return if (System.currentTimeMillis() - (
+            movieDatabase.remoteKeysDao.getCreationTime()
+                ?: 0
+        ) < cacheTimeout
         ) {
             InitializeAction.SKIP_INITIAL_REFRESH
         } else {
@@ -81,38 +81,36 @@ class MovieRemoteMediator(
             }
         }
 
+        remoteMovieDataSource.getPopularMovies(page = page).fold(onSuccess = { data ->
+            val movies = data.movies
+            val endOfPaginationReached = movies.isEmpty()
 
-        remoteMovieDataSource.getPopularMovies(page = page).fold(
-            onSuccess = { data ->
-                val movies = data.movies
-                val endOfPaginationReached = movies.isEmpty()
-
-                movieDatabase.withTransaction {
-                    if (loadType == LoadType.REFRESH) {
-                        movieDatabase.remoteKeysDao.clearRemoteKeys()
-                        movieDatabase.movieDao.clearAllMovies()
-                    }
-                    val prevKey = if (page > 1) page - 1 else null
-                    val nextKey = if (endOfPaginationReached) null else page + 1
-                    val remoteKeys = movies.map {
-                        RemoteKeysEntity(
-                            movieID = it.id,
-                            prevKey = prevKey,
-                            currentPage = page,
-                            nextKey = nextKey
-                        )
-                    }
-                    val currentTime = System.currentTimeMillis()
-                    movieDatabase.remoteKeysDao.insertAll(remoteKeys)
-                    movieDatabase.movieDao.insertAll(movies.mapIndexed { _, movie ->
-                        movie.toMovieEntity(page = page, currentTime = currentTime)
-                    })
+            movieDatabase.withTransaction {
+                if (loadType == LoadType.REFRESH) {
+                    movieDatabase.remoteKeysDao.clearRemoteKeys()
+                    movieDatabase.movieDao.clearAllMovies()
                 }
-                return MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
-            },
-            onError = { error ->
-                return MediatorResult.Error(error.toThrowable())
+                val prevKey = if (page > 1) page - 1 else null
+                val nextKey = if (endOfPaginationReached) null else page + 1
+                val remoteKeys = movies.map {
+                    RemoteKeysEntity(
+                        movieID = it.id,
+                        prevKey = prevKey,
+                        currentPage = page,
+                        nextKey = nextKey
+                    )
+                }
+                val currentTime = System.currentTimeMillis()
+                movieDatabase.remoteKeysDao.insertAll(remoteKeys)
+                movieDatabase.movieDao.insertAll(
+                    movies.mapIndexed { _, movie ->
+                    movie.toMovieEntity(page = page, currentTime = currentTime)
+                }
+                )
             }
-        )
+            return MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
+        }, onError = { error ->
+            return MediatorResult.Error(error.toThrowable())
+        })
     }
 }

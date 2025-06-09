@@ -41,7 +41,7 @@ class GetMovieDetailsUseCase(
 
         remoteRepository.getReviews(movieId, 1).fold(
             onSuccess = { reviews ->
-                currentState = currentState.copy(reviews = reviews.results.take(3))
+                currentState = currentState.copy(reviews = reviews.results.take(REVIEWS_LIMIT))
                 emit(currentState)
             },
             onError = { error -> errors.add(error) }
@@ -49,7 +49,7 @@ class GetMovieDetailsUseCase(
 
         remoteRepository.getSimilarMovies(movieId, 1).fold(
             onSuccess = { similar ->
-                currentState = currentState.copy(similarMovies = similar.movies.take(6))
+                currentState = currentState.copy(similarMovies = similar.movies.take(SIMILAR_MOVIES_LIMIT))
                 emit(currentState)
             },
             onError = { error -> errors.add(error) }
@@ -59,4 +59,9 @@ class GetMovieDetailsUseCase(
             emit(currentState)
         }
     }.flowOn(Dispatchers.IO)
+
+    companion object {
+        private const val REVIEWS_LIMIT = 3
+        private const val SIMILAR_MOVIES_LIMIT = 6
+    }
 }

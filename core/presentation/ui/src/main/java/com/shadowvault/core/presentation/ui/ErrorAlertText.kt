@@ -40,4 +40,3 @@ fun DataError.toAlertText(): ErrorAlertText {
 //        DataError.Remote.Http.BAD_REQUEST -> TODO()
 //    }
 }
-

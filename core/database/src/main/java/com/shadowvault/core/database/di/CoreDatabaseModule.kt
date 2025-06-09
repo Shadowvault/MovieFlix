@@ -21,5 +21,4 @@ val coreDatabaseModule = module {
     single { get<MovieFlixDatabase>().movieDao }
     single { get<MovieFlixDatabase>().remoteKeysDao }
     singleOf(::RoomMovieDataSource).bind<LocalMovieDataSource>()
-
 }

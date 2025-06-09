@@ -6,15 +6,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.shadowvault.auth.domain.account.AccountRepository
-import com.shadowvault.auth.domain.account.model.CreateSessionParams
-import com.shadowvault.core.domain.session.SessionInfo
 import com.shadowvault.core.domain.session.SessionStorage
 import com.shadowvault.core.domain.util.fold
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 class MainViewModel(
     private val loginUseCase: LoginUseCase,
@@ -35,7 +31,6 @@ class MainViewModel(
             )
             state = state.copy(isCheckingAuth = false)
         }
-
     }
 
     fun onAction(action: MainAction) {
@@ -62,8 +57,6 @@ class MainViewModel(
                     }
                 )
             }
-
-            else -> Unit
         }
     }
 

@@ -8,7 +8,6 @@ import com.shadowvault.core.presentation.ui.toAlertText
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -19,10 +18,8 @@ class LoginScreenViewModel(
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(LoginScreenState())
-    val state = _state.onStart {
-
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), LoginScreenState())
-
+    @Suppress("MagicNumber")
+    val state = _state.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), LoginScreenState())
 
     private val eventChannel = Channel<LoginScreenEvent>()
     val events = eventChannel.receiveAsFlow()
@@ -30,7 +27,6 @@ class LoginScreenViewModel(
     fun onAction(action: LoginScreenAction) {
         when (action) {
             LoginScreenAction.OnLoginButtonPress -> createRequestToken()
-            else -> Unit
         }
     }
 

@@ -16,7 +16,11 @@ class RoomMovieDataSource(
         return MappedPagingSource(source) { it.toMovie() }
     }
 
-    override suspend fun insertAllMovies(movies: List<Movie>, page: Int): Result<List<Int>, DataError.Local> {
+    @Suppress("TooGenericExceptionCaught")
+    override suspend fun insertAllMovies(
+        movies: List<Movie>,
+        page: Int
+    ): Result<List<Int>, DataError.Local> {
         val currentTime = System.currentTimeMillis()
         return try {
             val entities = movies.map { it.toMovieEntity(page = page, currentTime) }
@@ -37,12 +41,10 @@ class RoomMovieDataSource(
 
     override suspend fun likeMovie(userId: Int, movieId: Int) {
         movieDao.likeMovie(LikedMovieEntity(userId, movieId))
-
     }
 
     override suspend fun unlikeMovie(userId: Int, movieId: Int) {
         movieDao.unlikeMovie(userId, movieId)
-
     }
 
     override suspend fun clearAllMovies() {

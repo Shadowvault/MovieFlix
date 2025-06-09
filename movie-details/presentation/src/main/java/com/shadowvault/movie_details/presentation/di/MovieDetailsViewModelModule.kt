@@ -8,5 +8,4 @@ import org.koin.dsl.module
 val movieDetailsViewModelModule = module {
     factory { GetMovieDetailsUseCase(get()) }
     viewModelOf(::MovieDetailsScreenViewModel)
-
 }

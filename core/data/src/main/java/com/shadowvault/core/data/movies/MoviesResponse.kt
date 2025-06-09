@@ -20,4 +20,3 @@ fun MoviesResponse.toMoviesResult(likedIds: Set<Int> = emptySet()): MoviesResult
         movies = results.map { it.toMovie(isLiked = likedIds.contains(it.id)) }
     )
 }
-

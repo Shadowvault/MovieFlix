@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.movieflix.android.library.compose)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.detekt)
 }
 
 android {
@@ -19,4 +20,8 @@ dependencies {
 
     implementation(project(":core:domain"))
     implementation(project(":core:presentation:designsystem"))
+
+    detektPlugins(libs.detekt.formatting)
+    detektPlugins(libs.detekt.libraries)
+    detektPlugins(libs.detekt.ruleAuthors)
 }

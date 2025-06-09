@@ -1,3 +1,5 @@
+@file:Suppress("MagicNumber")
+
 package com.shadowvault.core.presentation.designsystem
 
 import androidx.compose.ui.graphics.Color

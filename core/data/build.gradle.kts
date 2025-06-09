@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.movieflix.android.library)
     alias(libs.plugins.movieflix.jvm.ktor)
+    alias(libs.plugins.detekt)
 }
 
 android {
@@ -18,4 +19,8 @@ dependencies {
 
     implementation(project(":core:domain"))
     implementation(project(":core:database"))
+
+    detektPlugins(libs.detekt.formatting)
+    detektPlugins(libs.detekt.libraries)
+    detektPlugins(libs.detekt.ruleAuthors)
 }

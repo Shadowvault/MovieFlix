@@ -25,6 +25,7 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import kotlinx.serialization.serializer
+import timber.log.Timber
 import java.net.SocketTimeoutException
 
 suspend inline fun <reified Response : Any> HttpClient.get(
@@ -116,33 +117,35 @@ suspend inline fun <reified Response : Any> HttpClient.delete(
     }
 }
 
+@Suppress("TooGenericExceptionCaught", "ReturnCount")
 suspend inline fun <reified T> safeCall(execute: () -> HttpResponse): Result<T, DataError> {
     val response = try {
         execute()
     } catch (e: UnresolvedAddressException) {
-        e.printStackTrace()
+        Timber.e(e)
         return Result.Error(DataError.Network.NO_INTERNET)
     } catch (e: HttpRequestTimeoutException) {
-        e.printStackTrace()
+        Timber.e(e)
         return Result.Error(DataError.Network.SERVER_REQUEST_TIMEOUT)
     } catch (e: ConnectTimeoutException) {
-        e.printStackTrace()
+        Timber.e(e)
         return Result.Error(DataError.Network.CONNECTION_TIMEOUT)
     } catch (e: SocketTimeoutException) {
-        e.printStackTrace()
+        Timber.e(e)
         return Result.Error(DataError.Network.SOCKET_TIMEOUT)
     } catch (e: SerializationException) {
-        e.printStackTrace()
+        Timber.e(e)
         return Result.Error(DataError.Network.SERIALIZATION)
     } catch (e: Exception) {
         if (e is CancellationException) throw e
-        e.printStackTrace()
+        Timber.e(e)
         return Result.Error(DataError.Network.UNKNOWN)
     }
 
     return responseToResult(response)
 }
 
+@Suppress("MagicNumber")
 suspend inline fun <reified T> responseToResult(response: HttpResponse): Result<T, DataError> {
     return when (response.status.value) {
         in 200..299 -> Result.Success(response.body<T>())

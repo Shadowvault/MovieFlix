@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.movieflix.android.feature.ui)
+    alias(libs.plugins.detekt)
 }
 
 android {
@@ -21,4 +22,8 @@ dependencies {
 
     implementation(project(":core:domain"))
     implementation(project(":movie-details:domain"))
+
+    detektPlugins(libs.detekt.formatting)
+    detektPlugins(libs.detekt.libraries)
+    detektPlugins(libs.detekt.ruleAuthors)
 }

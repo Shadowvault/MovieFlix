@@ -48,7 +48,7 @@ data class MovieDetailsResponse(
 
 fun MovieDetailsResponse.toMovieDetailsResult() = MovieDetailsResult(
     adult = adult,
-    backdropPath = "https://image.tmdb.org/t/p/w780${backdropPath}",
+    backdropPath = "https://image.tmdb.org/t/p/w780$backdropPath",
     belongsToCollection = belongsToCollection?.toFlexibleValue { it.toCollection() },
     budget = budget,
     genres = genres.map { it.toGenre() },
@@ -59,7 +59,7 @@ fun MovieDetailsResponse.toMovieDetailsResult() = MovieDetailsResult(
     originalTitle = originalTitle,
     overview = overview,
     popularity = popularity,
-    posterPath = "https://image.tmdb.org/t/p/w500${posterPath}",
+    posterPath = "https://image.tmdb.org/t/p/w500$posterPath",
     productionCompanies = productionCompanies.map { it.toProductionCompany() },
     productionCountries = productionCountries.map { it.toProductionCountry() },
     releaseDate = releaseDate,

@@ -17,10 +17,9 @@ import com.shadowvault.auth.domain.account.model.DeleteSessionResult
 import com.shadowvault.core.data.get
 import com.shadowvault.core.data.post
 import com.shadowvault.core.domain.util.DataError
-import com.shadowvault.core.domain.util.map
 import com.shadowvault.core.domain.util.Result
+import com.shadowvault.core.domain.util.map
 import io.ktor.client.HttpClient
-
 
 class AccountRepositoryImpl(
     private val httpClient: HttpClient
@@ -38,7 +37,7 @@ class AccountRepositoryImpl(
             route = "/authentication/session/new",
             body = requestToken.toCreateSessionRequest()
         )
-        return result.map { it.toCreateSessionResult()}
+        return result.map { it.toCreateSessionResult() }
     }
 
     override suspend fun deleteSession(sessionId: String): Result<DeleteSessionResult, DataError> {
@@ -52,5 +51,4 @@ class AccountRepositoryImpl(
         )
         return result.map { it.toAccountDetailsResult() }
     }
-
 }

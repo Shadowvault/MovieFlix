@@ -15,10 +15,14 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 
+@Suppress("MagicNumber")
 fun Modifier.shimmerPlaceholder(
     shimmerVisibility: ShimmerVisibility = ShimmerVisibility.Show
 ): Modifier {
-    return if (shimmerVisibility == ShimmerVisibility.Hide) this else composed {
+    return if (shimmerVisibility == ShimmerVisibility.Hide) {
+        this
+    } else {
+        composed {
         val transition = rememberInfiniteTransition(label = "shimmer")
         val shimmerTranslateAnim by transition.animateFloat(
             initialValue = 0f,
@@ -26,7 +30,8 @@ fun Modifier.shimmerPlaceholder(
             animationSpec = infiniteRepeatable(
                 animation = tween(1000, easing = LinearEasing),
                 repeatMode = RepeatMode.Restart
-            ), label = "shimmer-translate"
+            ),
+                label = "shimmer-translate"
         )
 
         val baseColor = MaterialTheme.colorScheme.surfaceVariant
@@ -41,6 +46,7 @@ fun Modifier.shimmerPlaceholder(
         this
             .background(brush)
             .alpha(1f)
+    }
     }
 }
 

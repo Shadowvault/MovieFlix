@@ -10,7 +10,7 @@ import kotlinx.serialization.json.Json
 
 class EncryptedSessionStorage(
     private val sharedPreferences: SharedPreferences
-): SessionStorage {
+) : SessionStorage {
 
     companion object {
         private const val KEY_AUTH_INFO = "KEY_AUTH_INFO"
@@ -27,16 +27,15 @@ class EncryptedSessionStorage(
 
     override suspend fun set(info: SessionInfo?) {
         withContext(Dispatchers.IO) {
-            if(info == null) {
+            if (info == null) {
                 sharedPreferences.edit(commit = true) { remove(KEY_AUTH_INFO) }
                 return@withContext
             }
 
             val json = Json.encodeToString(info.toSessionInfoSerializable())
-            sharedPreferences
-                .edit(commit = true) {
-                    putString(KEY_AUTH_INFO, json)
-                }
+            sharedPreferences.edit(commit = true) {
+                putString(KEY_AUTH_INFO, json)
+            }
         }
     }
 }

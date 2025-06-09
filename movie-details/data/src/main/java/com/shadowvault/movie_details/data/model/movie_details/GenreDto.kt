@@ -1,7 +1,7 @@
 package com.shadowvault.movie_details.data.model.movie_details
 
-import kotlinx.serialization.Serializable
 import com.shadowvault.movie_details.domain.model.movie_details.Genre
+import kotlinx.serialization.Serializable
 
 @Serializable
 data class GenreDto(

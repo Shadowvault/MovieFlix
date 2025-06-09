@@ -24,11 +24,11 @@ class MovieDetailsScreenViewModel(
     private val _userId = MutableStateFlow<Int?>(null)
 
     private val _state = MutableStateFlow(MovieDetailsScreenState())
+    @Suppress("MagicNumber")
     val state = _state.onStart {
         viewModelScope.launch {
         }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), MovieDetailsScreenState())
-
 
     private val eventChannel = Channel<MovieDetailsScreenEvent>()
     val events = eventChannel.receiveAsFlow()
@@ -78,7 +78,6 @@ class MovieDetailsScreenViewModel(
                         }
                     }
                 }
-
             }
 
             is MovieDetailsScreenAction.OnMovieFavoritePress -> {
@@ -114,5 +113,4 @@ class MovieDetailsScreenViewModel(
                 }
         }
     }
-
 }

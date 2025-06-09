@@ -69,14 +69,11 @@ fun HomeScreenRoot(
             HomeScreenEvent.ForceRefreshRequested -> {
                 viewModel.onAction(HomeScreenAction.OnClear(pagedMovies))
             }
-
-            else -> Unit
         }
     }
 
     HomeScreen(
         pagedMovies = pagedMovies,
-        state = state,
         onAction = { action ->
             when (action) {
                 is HomeScreenAction.OnMoviePress -> {
@@ -90,11 +87,11 @@ fun HomeScreenRoot(
     )
 }
 
+@Suppress("MagicNumber")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     pagedMovies: LazyPagingItems<Movie>,
-    state: HomeScreenState,
     onAction: (HomeScreenAction) -> Unit,
 ) {
     val listState = rememberSaveable(saver = LazyListState.Saver) {
@@ -152,7 +149,6 @@ fun HomeScreen(
                             )
                         }
                     }
-
                 } else {
                     items(
                         count = pagedMovies.itemCount,
@@ -200,9 +196,7 @@ fun HomeScreen(
             }
         }
     }
-
 }
-
 
 @Preview
 @Composable
@@ -217,13 +211,13 @@ private fun HomeScreenPreview() {
             voteAverage = 7.8,
             genreIds = listOf(1, 2),
             isLiked = false,
-            backdropPath = "",            // empty string or some dummy URL
-            voteCount = 123,              // any integer number
-            isAdult = false,              // boolean
-            originalLanguage = "en",      // language code string
-            originalTitle = "Movie 1",    // original title string
-            popularity = 15.5,           // float number
-            isVideo = false               // boolean
+            backdropPath = "", // empty string or some dummy URL
+            voteCount = 123, // any integer number
+            isAdult = false, // boolean
+            originalLanguage = "en", // language code string
+            originalTitle = "Movie 1", // original title string
+            popularity = 15.5, // float number
+            isVideo = false // boolean
         ),
         Movie(
             id = 1,
@@ -234,13 +228,13 @@ private fun HomeScreenPreview() {
             voteAverage = 7.8,
             genreIds = listOf(1, 2),
             isLiked = false,
-            backdropPath = "",            // empty string or some dummy URL
-            voteCount = 123,              // any integer number
-            isAdult = false,              // boolean
-            originalLanguage = "en",      // language code string
-            originalTitle = "Movie 1",    // original title string
-            popularity = 15.5,           // float number
-            isVideo = false               // boolean
+            backdropPath = "", // empty string or some dummy URL
+            voteCount = 123, // any integer number
+            isAdult = false, // boolean
+            originalLanguage = "en", // language code string
+            originalTitle = "Movie 1", // original title string
+            popularity = 15.5, // float number
+            isVideo = false // boolean
         ),
     )
 
@@ -249,9 +243,6 @@ private fun HomeScreenPreview() {
     MovieFlixTheme {
         Surface {
             HomeScreen(
-                state = HomeScreenState(
-                    isLoading = false
-                ),
                 onAction = {},
                 pagedMovies = lazyPagingItems,
             )

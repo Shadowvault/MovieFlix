@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.movieflix.android.library.compose)
+    alias(libs.plugins.detekt)
 }
 
 android {
@@ -22,4 +23,8 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+
+    detektPlugins(libs.detekt.formatting)
+    detektPlugins(libs.detekt.libraries)
+    detektPlugins(libs.detekt.ruleAuthors)
 }

@@ -33,7 +33,6 @@ class MovieDetailsRemoteRepositoryImpl(
         return result.map { it.toMovieDetailsResult() }
     }
 
-
     override suspend fun getCredits(movieId: Int): Result<CreditsResult, DataError> {
         val result = httpClient.get<CreditsResponse>(
             route = "/movie/$movieId/credits",
