@@ -9,8 +9,7 @@ class MappedPagingSource<T : Any, R : Any>(
 ) : PagingSource<Int, R>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, R> {
-        val result = source.load(params)
-        return when (result) {
+        return when (val result = source.load(params)) {
             is LoadResult.Page -> {
                 val mappedData = result.data.map { mapper(it) }
                 LoadResult.Page(
@@ -28,6 +27,6 @@ class MappedPagingSource<T : Any, R : Any>(
 
     override fun getRefreshKey(state: PagingState<Int, R>): Int? {
         @Suppress("UNCHECKED_CAST")
-        return (source as PagingSource<Int, T>).getRefreshKey(state as PagingState<Int, T>)
+        return (source).getRefreshKey(state as PagingState<Int, T>)
     }
 }

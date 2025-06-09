@@ -1,16 +1,9 @@
 import androidx.room.gradle.RoomExtension
-import com.android.build.api.dsl.LibraryExtension
-import com.shadowvault.convention.ExtensionType
-import com.shadowvault.convention.configureAndroidCompose
-import com.shadowvault.convention.configureBuildTypes
-import com.shadowvault.convention.configureKotlinAndroid
 import com.shadowvault.convention.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
-import org.gradle.kotlin.dsl.getByType
-import org.gradle.kotlin.dsl.kotlin
 
 class AndroidRoomConventionPlugin: Plugin<Project> {
 

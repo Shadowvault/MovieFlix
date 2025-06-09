@@ -1,7 +1,6 @@
 package com.shadowvault.convention
 
 import com.android.build.api.dsl.ApplicationExtension
-import com.android.build.api.dsl.ApplicationProductFlavor
 import com.android.build.api.dsl.LibraryExtension
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure

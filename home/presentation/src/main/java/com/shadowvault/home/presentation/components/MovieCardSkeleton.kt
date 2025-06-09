@@ -30,7 +30,6 @@ fun MovieCardSkeleton(
         modifier = modifier
             .fillMaxWidth()
             .height(220.dp)
-            .padding(horizontal = 16.dp, vertical = 8.dp)
             .clip(MaterialTheme.shapes.medium)
             .border(
                 width = 3.dp,

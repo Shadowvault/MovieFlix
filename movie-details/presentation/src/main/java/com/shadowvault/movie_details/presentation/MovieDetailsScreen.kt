@@ -38,6 +38,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -128,7 +129,7 @@ fun MovieDetailsScreen(
             ) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "Back"
+                    contentDescription = Icons.AutoMirrored.Filled.ArrowBack.name
                 )
             }
             IconButton(
@@ -145,7 +146,7 @@ fun MovieDetailsScreen(
             ) {
                 Icon(
                     imageVector = if (state.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
-                    contentDescription = "Toggle Favorite"
+                    contentDescription = if (state.isFavorite) Icons.Default.Favorite.name else Icons.Default.FavoriteBorder.name
                 )
             }
 
@@ -164,7 +165,7 @@ fun MovieDetailsScreen(
                 ) {
                     Icon(
                         imageVector = Icons.Default.Share,
-                        contentDescription = "Share"
+                        contentDescription = Icons.Default.Share.name
                     )
                 }
             }
@@ -197,15 +198,23 @@ fun MovieDetailsScreen(
 
             Spacer(Modifier.height(8.dp))
 
-            Text(
-                text = "Runtime: ${state.runtimeMinutes}",
-                style = MaterialTheme.typography.labelMedium
-            )
+            Row {
+                Text(
+                    text = stringResource(R.string.runtime),
+                    style = MaterialTheme.typography.labelMedium
+                )
+                state.runtimeMinutes?.let {
+                    Text(
+                        text = stringResource(R.string.runtime_minutes, it),
+                        style = MaterialTheme.typography.labelMedium
+                    )
+                }
+            }
 
             Spacer(Modifier.height(16.dp))
 
             Text(
-                text = "Description",
+                text = stringResource(R.string.description),
                 style = MaterialTheme.typography.titleMedium
             )
             Text(
@@ -216,7 +225,7 @@ fun MovieDetailsScreen(
             Spacer(Modifier.height(16.dp))
 
             Text(
-                text = "Cast",
+                text = stringResource(R.string.cast),
                 style = MaterialTheme.typography.titleMedium
             )
 
@@ -225,7 +234,7 @@ fun MovieDetailsScreen(
             Spacer(Modifier.height(16.dp))
 
             Text(
-                text = "Reviews",
+                text = stringResource(R.string.reviews),
                 style = MaterialTheme.typography.titleMedium
             )
             state.reviews.forEach { review ->
@@ -242,7 +251,7 @@ fun MovieDetailsScreen(
             Spacer(Modifier.height(16.dp))
 
             Text(
-                text = "Similar Movies",
+                text = stringResource(R.string.similar_movies),
                 style = MaterialTheme.typography.titleMedium
             )
             LazyRow(

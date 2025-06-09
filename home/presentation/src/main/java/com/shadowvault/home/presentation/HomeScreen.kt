@@ -23,6 +23,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -30,6 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -65,14 +67,11 @@ fun HomeScreenRoot(
                     setMessage(event.errorAlertText.description.asString(context))
                 }.show()
             }
-
-            HomeScreenEvent.ForceRefreshRequested -> {
-                viewModel.onAction(HomeScreenAction.OnClear(pagedMovies))
-            }
         }
     }
 
     HomeScreen(
+        state = state,
         pagedMovies = pagedMovies,
         onAction = { action ->
             when (action) {
@@ -91,6 +90,7 @@ fun HomeScreenRoot(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
+    state: HomeScreenState,
     pagedMovies: LazyPagingItems<Movie>,
     onAction: (HomeScreenAction) -> Unit,
 ) {
@@ -102,13 +102,20 @@ fun HomeScreen(
     val isError = pagedMovies.loadState.refresh is LoadState.Error
     val pullToRefreshState = rememberPullToRefreshState()
 
+    LaunchedEffect(pagedMovies.loadState.refresh) {
+        val finished = pagedMovies.loadState.refresh !is LoadState.Loading
+        if (finished && state.isRefreshing) {
+            onAction(HomeScreenAction.OnRefreshStateDone)
+        }
+    }
+
     Column(
         modifier = Modifier
             .windowInsetsPadding(WindowInsets.statusBars)
             .fillMaxSize()
     ) {
         Text(
-            text = "Now Showing",
+            text = stringResource(R.string.popular_movies),
             style = MaterialTheme.typography.headlineSmall,
             modifier = Modifier
                 .fillMaxWidth()
@@ -117,8 +124,8 @@ fun HomeScreen(
         )
         PullToRefreshBox(
             state = pullToRefreshState,
-            onRefresh = { onAction(HomeScreenAction.OnForceRefresh) },
-            isRefreshing = isRefreshing,
+            onRefresh = { onAction(HomeScreenAction.OnForceRefresh(pagedMovies)) },
+            isRefreshing = state.isRefreshing,
             modifier = Modifier
                 .windowInsetsPadding(WindowInsets.statusBars)
                 .fillMaxSize()
@@ -127,11 +134,11 @@ fun HomeScreen(
         ) {
             LazyColumn(
                 state = listState,
-                contentPadding = PaddingValues(12.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp),
+                contentPadding = PaddingValues(16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
             ) {
                 if (isRefreshing && pagedMovies.itemCount == 0) {
-                    items(3) {
+                    items(5) {
                         MovieCardSkeleton()
                     }
                 } else if (isError && pagedMovies.itemCount == 0) {
@@ -143,7 +150,7 @@ fun HomeScreen(
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
-                                text = "No movies found.\nPull down to refresh.",
+                                text = stringResource(R.string.no_movies_found_pull_down_to_refresh),
                                 style = MaterialTheme.typography.bodyMedium,
                                 textAlign = TextAlign.Center
                             )
@@ -189,7 +196,11 @@ fun HomeScreen(
                             }
                         }
 
-                        is LoadState.Error -> Text("Error loading more", color = Color.Red)
+                        is LoadState.Error -> Text(
+                            stringResource(R.string.error_loading_more),
+                            color = Color.Red
+                        )
+
                         else -> {}
                     }
                 }
@@ -243,6 +254,7 @@ private fun HomeScreenPreview() {
     MovieFlixTheme {
         Surface {
             HomeScreen(
+                state = HomeScreenState(isRefreshing = false),
                 onAction = {},
                 pagedMovies = lazyPagingItems,
             )

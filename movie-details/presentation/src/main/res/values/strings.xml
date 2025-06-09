@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="similar_movies">Similar Movies</string>
+    <string name="reviews">Reviews</string>
+    <string name="cast">Cast</string>
+    <string name="description">Description</string>
+    <string name="runtime">"Runtime: "</string>
+    <string name="runtime_minutes">%1$s minutes</string>
+</resources>

@@ -1,6 +1,5 @@
 package com.shadowvault.home.data
 
-import MovieRemoteMediator
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig

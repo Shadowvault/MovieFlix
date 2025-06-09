@@ -1,6 +1,5 @@
 package com.shadowvault.core.data
 
-import android.os.Build
 import com.shadowvault.core.domain.util.DataError
 import com.shadowvault.core.domain.util.Result
 import io.ktor.client.HttpClient
@@ -77,13 +76,6 @@ suspend inline fun <reified Request, reified Response : Any> HttpClient.post(
         post {
             url(constructRoute(route))
             setBody(body)
-            header("X-MobileApp-OS", BuildConfig.OS)
-            header("X-Smartphone-Brand", Build.BRAND)
-            header("X-Smartphone-Model", Build.MODEL)
-            header("X-Smartphone-OSVersion", Build.VERSION.RELEASE)
-            header("X-Api-Version", "1.0")
-            header("X-MobileApp-Version", "1")
-
             headers.forEach { (key, value) ->
                 header(key, value)
             }

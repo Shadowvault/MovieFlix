@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="popular_movies">Popular Movies</string>
+    <string name="no_movies_found_pull_down_to_refresh">No movies found.\nPull down to refresh.</string>
+    <string name="error_loading_more">Error loading more</string>
+</resources>

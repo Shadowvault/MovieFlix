@@ -16,6 +16,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.shadowvault.core.presentation.designsystem.MovieFlixTheme
+import kotlin.math.cos
+import kotlin.math.sin
 
 @Composable
 fun LinearRatingStars(
@@ -74,8 +76,8 @@ private fun androidx.compose.ui.graphics.drawscope.DrawScope.drawStar(color: Col
         moveTo(mid, 0f)
         for (i in 1 until 10) {
             val r = if (i % 2 == 0) radius else innerRadius
-            val x = mid + (r * Math.sin(i * angle)).toFloat()
-            val y = mid - (r * Math.cos(i * angle)).toFloat()
+            val x = mid + (r * sin(i * angle)).toFloat()
+            val y = mid - (r * cos(i * angle)).toFloat()
             lineTo(x, y)
         }
         close()

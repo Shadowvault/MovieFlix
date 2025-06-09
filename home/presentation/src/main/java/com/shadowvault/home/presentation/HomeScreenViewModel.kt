@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -47,17 +48,16 @@ class HomeScreenViewModel(
                 toggleLike(action.movieId, action.isLiked)
             }
 
-            HomeScreenAction.OnForceRefresh -> {
+            is HomeScreenAction.OnForceRefresh -> {
                 viewModelScope.launch {
-                    eventChannel.send(HomeScreenEvent.ForceRefreshRequested)
-                }
-            }
-
-            is HomeScreenAction.OnClear -> {
-                viewModelScope.launch {
+                    _state.update { state -> state.copy(isRefreshing = true) }
                     movieRepository.clear()
                     action.pagedMovies.refresh()
                 }
+            }
+
+            HomeScreenAction.OnRefreshStateDone -> {
+                _state.update { state -> state.copy(isRefreshing = false) }
             }
 
             else -> Unit

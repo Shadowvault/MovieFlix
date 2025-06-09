@@ -1,5 +1,4 @@
 import com.shadowvault.convention.addUILayerDependencies
-import com.shadowvault.convention.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.DependencyHandlerScope
