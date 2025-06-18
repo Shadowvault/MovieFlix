@@ -40,7 +40,6 @@ class HomeScreenViewModelTest {
         viewModel = HomeScreenViewModel(movieRepository, profileInfoStorage)
     }
 
-
     @AfterEach
     fun tearDown() {
         Dispatchers.resetMain()
@@ -74,8 +73,6 @@ class HomeScreenViewModelTest {
         }
     }
 
-
     private fun fakeUserProfile(): ProfileInfo =
         ProfileInfo(name = "User", username = "username", 1, "")
 }
-
