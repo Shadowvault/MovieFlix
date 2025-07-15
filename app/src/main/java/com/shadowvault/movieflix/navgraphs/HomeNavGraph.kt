@@ -32,5 +32,6 @@ sealed class MainRoute {
     data object Home : MainRoute() {
         @Serializable
         data class MovieDetails(val movieInt: Int, val isLiked: Boolean)
+        
     }
 }
